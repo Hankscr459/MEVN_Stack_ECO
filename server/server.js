@@ -27,26 +27,34 @@ app.use(morgan('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-// GET - Retrieve data from the server
-app.get('/', (req, res) => {
-    res.json('Hello amazon clone')
-})
+// require apis
+const productRoutes = require('./routes/product')
+const categoryRoutes = require('./routes/category')
+const ownerRoutes = require('./routes/owner')
+app.use('/api', productRoutes)
+app.use('/api', categoryRoutes)
+app.use('/api', ownerRoutes)
 
-// POST - send data from frontend backend
-app.post('/', (req, res) => {
-    let user = new User()
-    user.name = req.body.name
-    user.email = req.body.email
-    user.password = req.body.password
+// // GET - Retrieve data from the server
+// app.get('/', (req, res) => {
+//     res.json('Hello amazon clone')
+// })
 
-    user.save(err=> {
-        if (err) {
-            res.json(err)
-        } else {
-            res.json('successfully saved')
-        }
-    })
-})
+// // POST - send data from frontend backend
+// app.post('/', (req, res) => {
+//     let user = new User()
+//     user.name = req.body.name
+//     user.email = req.body.email
+//     user.password = req.body.password
+
+//     user.save(err=> {
+//         if (err) {
+//             res.json(err)
+//         } else {
+//             res.json('successfully saved')
+//         }
+//     })
+// })
 
 app.listen(3000, err => {
     if (err) {
